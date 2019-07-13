@@ -73,7 +73,7 @@ $(() => {
             //将字符串转换为对象   JSON.parse(必须放一个满足json格式的字符串)   返回值： 就是js里面的对象(也可能是数组)
             arr = JSON.parse(jsonStr); /* 读取出来的是一个字符串或者是null，所以这里不用把读取出来的数据转换成字符串，直接放进去就行了 */
         }
-        // 我们要把这些信息存储到本地存储，如果获取到这些信息？怎么样获取信息？ 我们要根据我们唯一的id 来获取这些信息， 因为id 是唯一的，我们获取了一个商品的信息，就相当于也获取其他信息，我们在第12 13 行的时候已经判断是不是该商品的id ，而且已经return 返回 给了函数， 函数赋值给了obj ，所以我们这里就可以获取到这些商品信息
+
         // 但是又发现如果点击同一个商品两次，就会一个商品出现两个在购物车里面，如果点击的是同一个商品，最好，把数量叠加
         // 判断当前产品的id，是否出现在 localStroge 里面的数组里面，如果出现，就是曾经添加过了，只要叠加数量
         // 其实大概的意思就是说： 用户可能是团购，或者他要买好几部手机送给家人，那就要一个商品点击好几次，把数量变成1 以上， 我们在本地存储的时候是这样的，点击一次就生成一条信息存储在本地存储，如果是这样，如果客户团购100件东西，那岂不是要存储100次，这样我们读取的时候就非常慢，所以我我们可以这样来判断，如果说id 相同，那么我们就把它叠加起来，把它变成还是一条数据
@@ -81,19 +81,27 @@ $(() => {
         let isExit = arr.find(e => {
             return e.pID == id;
         });
-        if(isExit)
-        let good = {
-            imgSrc: obj.imgSrc,
-            name: obj.name,
-            price: obj.price,
-            pID: obj.pID,
-            number: boj.number
+        // 如果不是undefined, 那就说明找到了， 那么我们就应该把小框内的内容 加起来
+        if (isExit !== undefined) {
+            console.log(isExit.number);
+            isExit.number += number; /* isExit.number = isExit.number + number    其实就是上面 find 的时候遍历了，找出了所有的相同的id ，然后就是把原来有的数字，加上遍历找到的数字，相加起来 */
         }
-        // 获取到这些信息后，我们把这些信息放到数组里面去  数组.push();
-        arr.push(good);
-        // 然后我们这些数据存在本地存储,但是之前要先转换格式 因为：localStorage.setItem(key,value);  该方式只能存储字符串，如果你给的数据不是字符串，会自动转换为字符串再存储 ，所以要先转换格式
-        let jsonStr = JSON.stringify(arr);
-        localStorage.setItem('shopCarData', jsonStr);
+        // 这里就是如果没有找到的话，那么就说明用户值买了一件东西，这样我们直接生成一个数组存储到本地数据
+        else {
+            // 我们要把这些信息存储到本地存储，如果获取到这些信息？怎么样获取信息？ 我们要根据我们唯一的id 来获取这些信息， 因为id 是唯一的，我们获取了一个商品的信息，就相当于也获取其他信息，我们在第12 13 行的时候已经判断是不是该商品的id ，而且已经return 返回 给了函数， 函数赋值给了obj ，所以我们这里就可以获取到这些商品信息
+            let good = {
+                imgSrc: obj.imgSrc,
+                name: obj.name,
+                price: obj.price,
+                pID: obj.pID,
+                number: obj.number
+            }
+            // 获取到这些信息后，我们把这些信息放到数组里面去  数组.push();
+            arr.push(good);
+            // 然后我们这些数据存在本地存储,但是之前要先转换格式 因为：localStorage.setItem(key,value);  该方式只能存储字符串，如果你给的数据不是字符串，会自动转换为字符串再存储 ，所以要先转换格式
+            let jsonStr = JSON.stringify(arr);
+            localStorage.setItem('shopCarData', jsonStr);
+        }
     });
     // 点击加入购物车，跳转到购物页面  location.href
     // 获取 元素 和注册事件
