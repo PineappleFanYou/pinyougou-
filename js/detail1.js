@@ -10,10 +10,10 @@ $(() => {
     */
     // 既然返回一个条件，那就是已经包含了判断，我们要声明一个变量来接收
     let obj = phoneData.find(e => {
-        return e.pID === id;
+        return +e.pID === +id;
     });
     // 更改商品介绍文字
-    // console.log(arr);
+    console.log(id);
     $('.sku-name').text(obj.name);
     // 更改商品的价格
     $('.summary-price em').text(obj.price);
@@ -63,7 +63,7 @@ $(() => {
         let number = parseInt($('.choose-number').val());
 
         // 我们要先读取本地数据,所以这个是一开始没有存储信息的时候就应该做的  在本地存储的数据里面，要获取出来  localStorage.getItem(key);   返回值： 字符串 —— 永远是字符串或者是null
-        let jsonStr = localStorage.getItem('shopCarData');
+        let jsonStr = localStorage.getItem('shopCartData');
         // 然后判断我们之前有没有数据   这个是在读取出来之后的判断，如果没有读取，那怎么判断
         let arr; /* 我们要在外面来声明变量，如果实在if 里面声明，那么在else 里面或者其他地方就因为作用域的原因用不了 */
         if (jsonStr == null) {
@@ -100,7 +100,7 @@ $(() => {
             arr.push(good);
             // 然后我们这些数据存在本地存储,但是之前要先转换格式 因为：localStorage.setItem(key,value);  该方式只能存储字符串，如果你给的数据不是字符串，会自动转换为字符串再存储 ，所以要先转换格式
             let jsonStr = JSON.stringify(arr);
-            localStorage.setItem('shopCarData', jsonStr);
+            localStorage.setItem('shopCartData', jsonStr);
         }
     });
     // 点击加入购物车，跳转到购物页面  location.href
@@ -108,5 +108,4 @@ $(() => {
     $('.addshopcar').on('click', function () {
         location.href = './cart.html';
     });
-
 });

@@ -122,9 +122,13 @@
 
 
   <!-- 内容区 -->
+  <!-- 如果打开购物车页面，一开始里面没东西，会显示一个提示，自己的页面里面没有，需要自己写一个 -->
+  <div class="empty-tip tc">
+    你的购物车空空如也，快去<a href="./list.html">购物</a>吧！！！
+  </div>
   <div class="main">
     <div class="w">
-
+      <!-- 一开始没有商品，下面的总计也不应该出现，给总计的盒子，加一个hidden的类名，把总结的div先隐藏 -->
       <div class="cart-header hidden">
         <div class="row">
           <div class=" cell col-1">
@@ -240,7 +244,7 @@
           </div>
         </div> -->
       </div>
-
+      <!-- 一开始没有商品，下面的总计也不应该出现，给总计的盒子，加一个hidden的类名，把总结的div先隐藏 -->
       <div class="total-of hidden">
         <div class="row w">
           <div class="cell col-1">
@@ -397,5 +401,10 @@
     <p><span class="ui-icon ui-icon-alert"></span>这些项目将被永久删除，并且无法恢复。您确定吗？</p>
   </div>
 </body>
+<script src="./js/data.js"></script>
+<script src="./js/jquery.js"></script>
+<!-- <script src="./js/list1.js"></script> -->
+<!-- <script src="./js/detail1.js"></script> -->
+<script src="./js/cart.js"></script>
 
 </html>
