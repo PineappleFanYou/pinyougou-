@@ -57,6 +57,28 @@ $(() => {
   function computedCountAndMoney() {
     // 算出总计里面的总数量和总价
     // 根据选中的多选框，得到选中的商品的id
-
+    let totalCount = 0;
+    let totalMoney = 0;
+    //获取全部小复选框
+    $('.item-list input[type=checkbox]:checked').each((i, e) => {
+      // console.log(e);
+      let id = parseInt($(e).parents('.item').attr('data-id'));
+      arr.forEach(e => {
+        if (id === e.pID) {
+          //勾选在本地存储中的数据
+          totalCount += e.number;
+          totalMoney += e.number * e.price;
+        }
+      });
+    });
+    //修改数量和总价
+    $('.selected').text(totalCount);
+    $('.total-money').text(totalMoney);
   }
+  computedCountAndMoney();
+  //实现全选和全不选
+  $('.pcik-all').on('click', function () {
+    // 看看自己当前的状态
+    let status = $(this).prop('checked');
+  })
 });
